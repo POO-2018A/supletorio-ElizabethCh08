@@ -5,11 +5,13 @@
  */
 package productos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ESFOT
  */
-public class Componente extends Productos {
+public class Componente extends Productos implements Serializable{
     
     private String tipo;
     private int capacidad;
@@ -40,8 +42,18 @@ public class Componente extends Productos {
     }
     
     
-    public Componente(String nombre, String precio, String marca) {
-        super(nombre, precio, marca);
+    public Componente(String nombre, double precio, String marca,String categoria,String tipo,int capacidad,int velocidad) {
+        super(nombre, precio, marca,categoria);
+        this.tipo=tipo;
+        this.capacidad=capacidad;
+        this.velocidad=velocidad;
+        
     }
+    
+    public Componente(String nombre, double precio, String marca, String categoria) {
+        super(nombre, precio, marca, categoria);
+    }
+    
+    
     
 }

@@ -5,11 +5,13 @@
  */
 package productos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ESFOT
  */
-public class Accesorio extends Productos {
+public class Accesorio extends Productos implements Serializable{
     
     
     private String tipo;
@@ -32,8 +34,15 @@ public class Accesorio extends Productos {
     }
     
     
-    public Accesorio(String nombre, String precio, String marca) {
-        super(nombre, precio, marca);
+    public Accesorio(String nombre, double precio, String marca,String categoria,String tipo, String color) {
+        super(nombre, precio, marca,categoria);
+        this.tipo= tipo;
+        this.color=color;
+    }
+    
+    
+    public Accesorio(String nombre, double precio, String marca, String categoria) {
+        super(nombre, precio, marca, categoria);
     }
     
 }

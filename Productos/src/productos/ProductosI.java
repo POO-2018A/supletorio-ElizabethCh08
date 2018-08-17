@@ -6,6 +6,7 @@
 package productos;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,7 +16,8 @@ import javax.swing.table.DefaultTableModel;
 public class ProductosI extends javax.swing.JFrame {
     ArrayList<Object> productos = new ArrayList<>();
     ClsControlador controller = new ClsControlador();
-    
+    int cont = 0;
+        
 
     /**
      * Creates new form ProductosI
@@ -23,9 +25,12 @@ public class ProductosI extends javax.swing.JFrame {
     public ProductosI() {
         initComponents();
         productos = controller.extraerObjetos("producto.dat");
+        llenarGrid();
         panelComputador.setVisible(false);
         panelComponente.setVisible(false);
         panelAccesorio.setVisible(false);
+        
+        
     }
 
     /**
@@ -50,11 +55,11 @@ public class ProductosI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtTipoComp = new javax.swing.JTextField();
         txtCapacidadComp = new javax.swing.JTextField();
         txtRAM = new javax.swing.JTextField();
         txtProcesador = new javax.swing.JTextField();
         btnOkComput = new javax.swing.JButton();
+        cmbTipoComputador = new javax.swing.JComboBox<>();
         panelAccesorio = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -72,8 +77,11 @@ public class ProductosI extends javax.swing.JFrame {
         btnOkComp = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
+        btnImprimirProductos = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Productos");
 
         jLabel2.setText("Nombre");
 
@@ -82,6 +90,24 @@ public class ProductosI extends javax.swing.JFrame {
         jLabel4.setText("Marca");
 
         jLabel5.setText("Categoria");
+
+        txtNombreProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreProductoKeyTyped(evt);
+            }
+        });
+
+        txtPrecioProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioProductoKeyTyped(evt);
+            }
+        });
+
+        txtMarcaProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMarcaProductoKeyTyped(evt);
+            }
+        });
 
         cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Accesorio", "Componente", "Computador" }));
 
@@ -95,7 +121,32 @@ public class ProductosI extends javax.swing.JFrame {
 
         jLabel8.setText("Procesador");
 
+        txtCapacidadComp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCapacidadCompKeyTyped(evt);
+            }
+        });
+
+        txtRAM.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRAMKeyTyped(evt);
+            }
+        });
+
+        txtProcesador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtProcesadorKeyTyped(evt);
+            }
+        });
+
         btnOkComput.setText("OK");
+        btnOkComput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkComputActionPerformed(evt);
+            }
+        });
+
+        cmbTipoComputador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lap-top", "PC" }));
 
         javax.swing.GroupLayout panelComputadorLayout = new javax.swing.GroupLayout(panelComputador);
         panelComputador.setLayout(panelComputadorLayout);
@@ -110,11 +161,15 @@ public class ProductosI extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(54, 54, 54)
                 .addGroup(panelComputadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtProcesador, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addComponent(txtRAM)
-                    .addComponent(txtCapacidadComp)
-                    .addComponent(txtTipoComp))
-                .addGap(40, 40, 40))
+                    .addGroup(panelComputadorLayout.createSequentialGroup()
+                        .addGroup(panelComputadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtProcesador, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                            .addComponent(txtRAM)
+                            .addComponent(txtCapacidadComp))
+                        .addGap(40, 40, 40))
+                    .addGroup(panelComputadorLayout.createSequentialGroup()
+                        .addComponent(cmbTipoComputador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(panelComputadorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnOkComput)
@@ -128,7 +183,7 @@ public class ProductosI extends javax.swing.JFrame {
                     .addGroup(panelComputadorLayout.createSequentialGroup()
                         .addGroup(panelComputadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(txtTipoComp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbTipoComputador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panelComputadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -151,7 +206,24 @@ public class ProductosI extends javax.swing.JFrame {
 
         jLabel10.setText("Color");
 
+        txtTipoAcc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTipoAccKeyTyped(evt);
+            }
+        });
+
+        txtColorAcc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColorAccKeyTyped(evt);
+            }
+        });
+
         btnOkAcc.setText("OK");
+        btnOkAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkAccActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelAccesorioLayout = new javax.swing.GroupLayout(panelAccesorio);
         panelAccesorio.setLayout(panelAccesorioLayout);
@@ -201,7 +273,30 @@ public class ProductosI extends javax.swing.JFrame {
 
         jLabel13.setText("Velocidad");
 
+        txtTipoCompo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTipoCompoKeyTyped(evt);
+            }
+        });
+
+        txtCapacidadCompo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCapacidadCompoKeyTyped(evt);
+            }
+        });
+
+        txtVelocidadCompo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtVelocidadCompoKeyTyped(evt);
+            }
+        });
+
         btnOkComp.setText("OK");
+        btnOkComp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkCompActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelComponenteLayout = new javax.swing.GroupLayout(panelComponente);
         panelComponente.setLayout(panelComponenteLayout);
@@ -242,52 +337,67 @@ public class ProductosI extends javax.swing.JFrame {
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nombre", "Precio", "Marca", "Categoria"
             }
         ));
         jScrollPane1.setViewportView(tblProductos);
+
+        btnImprimirProductos.setText("Imprimir lista");
+        btnImprimirProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirProductosActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel14.setText("PRODUCTOS KCH");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(panelComponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panelAccesorio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(56, 56, 56)
-                                .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(46, 46, 46)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtMarcaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(79, 79, 79)
-                        .addComponent(panelComputador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(panelComponente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panelAccesorio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(56, 56, 56)
+                                        .addComponent(txtNombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel5))
+                                        .addGap(46, 46, 46)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtMarcaProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtPrecioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(79, 79, 79)
+                                .addComponent(panelComputador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnImprimirProductos)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 116, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -312,9 +422,11 @@ public class ProductosI extends javax.swing.JFrame {
                     .addComponent(panelComputador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelComponente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addGap(18, 18, 18)
+                .addComponent(btnImprimirProductos)
+                .addGap(5, 5, 5)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(291, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
@@ -322,44 +434,218 @@ public class ProductosI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nombre = txtNombreProducto.getText();
+        String precio = txtPrecioProducto.getText();
+        String marca = txtMarcaProducto.getText();
+        String categoria = cmbCategoria.getSelectedItem().toString();
         
-        String nombre= txtNombreProducto.getText();
-        String precio= txtPrecioProducto.getText();
-        String marca= txtMarcaProducto.getText();
-        String categoria = (String) cmbCategoria.getSelectedItem();
-        
-        
-        if(categoria.equals("Accesorio")){
-            panelAccesorio.setVisible(true);
-            String tipo= txtTipoAcc.getText();
-            String color= txtColorAcc.getText();
-            Accesorio acc = new Accesorio(nombre,precio,marca);
-            productos.add(acc);
-            controller.escribirObjeto("producto.dat",productos);
-            productos = controller.extraerObjetos("estudiantes.dat");
-        
-        }else if(categoria.equals("Componente")){
-            panelComponente.setVisible(true);
-             String tipoC= txtTipoCompo.getText();
-             String capacidadC= txtCapacidadCompo.getText();
-             String velocidadC= txtVelocidadCompo.getText();
-             Componente cpm = new Componente(tipoC,capacidadC,velocidadC);
-             productos.add(cpm);
-            controller.escribirObjeto("producto.dat",productos);
-            productos = controller.extraerObjetos("estudiantes.dat");
-        
-        }if(categoria.equals("Computador")){
-            panelComputador.setVisible(true);
-            String tipoPC= txtTipoComp.getText();
-            String capacidadPC= txtTipoComp.getText();
-            String ramPC= txtRAM.getText();
-            String procesadorPC= txtProcesador.getText();
-            //Computador compu = new Computador(tipoPC,capacidadPC,ramPC,procesadorPC);
+        if (nombre.equals("") || precio.equals("") || marca.equals("")) { 
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar todos los campos");
+        } else {
+             try {
+               double precio1= Double.parseDouble(txtPrecioProducto.getText());
+               if(categoria.equals("Accesorio")){
+                   panelAccesorio.setVisible(true);
+               }else if(categoria.equals("Componente")){
+                   panelComponente.setVisible(true);
+               }else if(categoria.equals("Computador")){
+                   panelComputador.setVisible(true);
+               }
+               
+             }  
+             catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(rootPane, "Debe ingresar solo numeros en el precio");
+                
+            }
         }
+        
+       
+        
         
           
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnOkComputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkComputActionPerformed
+        // TODO add your handling code here:
+            /*String nombre= txtNombreProducto.getText();
+            double precio= Double.parseDouble(txtPrecioProducto.getText());
+            String marca= txtMarcaProducto.getText();
+            String categoria = cmbCategoria.getSelectedItem().toString();*/
+            
+            String tipo = cmbTipoComputador.getSelectedItem().toString();
+            String capacidad=txtCapacidadComp.getText();
+            String ramPC=txtRAM.getText();
+            String procesador= txtProcesador.getText();
+            
+            //String tipoPC= (String) cmbTipoComputador.getSelectedItem();
+            //int capacidadPC= Integer.valueOf(txtCapacidadComp.getText());
+            //int ramPC= Integer.valueOf(txtRAM.getText());
+            //String procesadorPC= txtProcesador.getText();
+            
+            /*Productos compu = new Computador(nombre,precio,marca,categoria);
+            productos.add(compu);
+            controller.escribirObjeto("producto.dat",productos);
+            productos = controller.extraerObjetos("producto.dat");*/
+            if (ramPC.equals("")||capacidad.equals("")||procesador.equals("")){
+                 JOptionPane.showMessageDialog(rootPane," Ingrese todos los campos  ");
+           }else{
+          try {
+               int cp= Integer.parseInt(txtCapacidadComp.getText());
+               int ram= Integer.parseInt(txtRAM.getText());
+          
+           
+            } catch (NumberFormatException nfe) {
+                JOptionPane.showMessageDialog(rootPane, "Ingrese numeros en capacidad y memoria");
+                txtCapacidadComp.setText("");
+                txtRAM.setText("");
+            }
+           }
+            
+           // modeloTablaProductos.addRow(new String[]{nombre,String.valueOf(precio),marca});
+            
+    }//GEN-LAST:event_btnOkComputActionPerformed
+
+    private void btnImprimirProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirProductosActionPerformed
+        
+        cont++;
+        String categoria = "" + cmbCategoria.getSelectedItem();
+        Productos newProducto = new Productos(txtNombreProducto.getText(),Double.parseDouble( txtPrecioProducto.getText()),txtMarcaProducto.getText(),categoria);
+        productos.add(newProducto);
+        controller.escribirObjeto("productos.dat", productos);
+        productos = controller.extraerObjetos("productos.dat");
+        Object productoG[] = { newProducto.getNombre(), newProducto.getPrecio(), newProducto.getMarca(), newProducto.getCategoria()};
+        DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+        model.addRow(productoG);
+        
+        
+    }//GEN-LAST:event_btnImprimirProductosActionPerformed
+
+    private void btnOkAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkAccActionPerformed
+        // TODO add your handling code here:
+            String nombre= txtNombreProducto.getText();
+            double precio= Double.parseDouble(txtPrecioProducto.getText());
+            String marca= txtMarcaProducto.getText();
+            String categoria = (String) cmbCategoria.getSelectedItem();
+            
+            String tipo= txtTipoAcc.getText();
+            String color= txtColorAcc.getText();
+            
+            if(tipo.equals(" ")|| color.equals(" ")){
+                JOptionPane.showMessageDialog(rootPane," Ingrese todos los campos  ");
+            }else{
+            Accesorio acc = new Accesorio(nombre,precio,marca,categoria,tipo,color);
+            productos.add(acc);
+            controller.escribirObjeto("producto.dat",productos);
+            productos = controller.extraerObjetos("producto.dat");
+            /*Object productosG [] = {acc.getNombre(),acc.getPrecio(),acc.getMarca(),acc.getCategoria()};
+            DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+            model.addRow(productosG);*/
+            //System.out.println(""+ productos);
+            }
+    }//GEN-LAST:event_btnOkAccActionPerformed
+
+    private void btnOkCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkCompActionPerformed
+        // TODO add your handling code here:
+            String nombre= txtNombreProducto.getText();
+            double precio= Double.parseDouble(txtPrecioProducto.getText());
+            String marca= txtMarcaProducto.getText();
+            String categoria = (String) cmbCategoria.getSelectedItem();
+            
+            String tipoC= txtTipoCompo.getText();
+            int capacidadC= Integer.valueOf(txtCapacidadCompo.getText());
+            int velocidadC= Integer.valueOf(txtVelocidadCompo.getText());
+            
+            if(tipoC.equals(" ")||capacidadC==0||velocidadC==0){
+                JOptionPane.showMessageDialog(rootPane," Ingrese todos los campos  ");
+            
+            }else{
+            
+            Componente cpm = new Componente(nombre,precio,marca,categoria,tipoC,capacidadC,velocidadC);
+            productos.add(cpm);
+            controller.escribirObjeto("producto.dat",productos);
+            productos = controller.extraerObjetos("producto.dat");
+            }
+    }//GEN-LAST:event_btnOkCompActionPerformed
+
+    private void txtNombreProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreProductoKeyTyped
+        // TODO add your handling code here:
+         char c= evt.getKeyChar();
+        
+        if((c<'a' || c>'z')&&(c<'A'|| c>'Z'))evt.consume();
+       
+        
+    }//GEN-LAST:event_txtNombreProductoKeyTyped
+
+    private void txtPrecioProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProductoKeyTyped
+        // TODO add your handling code here:
+         char c= evt.getKeyChar();
+        
+        if(c<'0' || c>'9')evt.consume();
+    }//GEN-LAST:event_txtPrecioProductoKeyTyped
+
+    private void txtMarcaProductoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMarcaProductoKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if((c<'a' || c>'z')&&(c<'A'|| c>'Z'))evt.consume();
+    }//GEN-LAST:event_txtMarcaProductoKeyTyped
+
+    private void txtCapacidadCompKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCapacidadCompKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if(c<'0' || c>'9')evt.consume();
+    }//GEN-LAST:event_txtCapacidadCompKeyTyped
+
+    private void txtRAMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRAMKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if(c<'0' || c>'9')evt.consume();
+    }//GEN-LAST:event_txtRAMKeyTyped
+
+    private void txtProcesadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProcesadorKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if((c<'a' || c>'z')&&(c<'A'|| c>'Z'))evt.consume();
+    }//GEN-LAST:event_txtProcesadorKeyTyped
+
+    private void txtTipoAccKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoAccKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if((c<'a' || c>'z')&&(c<'A'|| c>'Z'))evt.consume();
+    }//GEN-LAST:event_txtTipoAccKeyTyped
+
+    private void txtColorAccKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColorAccKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if((c<'a' || c>'z')&&(c<'A'|| c>'Z'))evt.consume();
+    }//GEN-LAST:event_txtColorAccKeyTyped
+
+    private void txtTipoCompoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoCompoKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if((c<'a' || c>'z')&&(c<'A'|| c>'Z'))evt.consume();
+    }//GEN-LAST:event_txtTipoCompoKeyTyped
+
+    private void txtCapacidadCompoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCapacidadCompoKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if(c<'0' || c>'9')evt.consume();
+    }//GEN-LAST:event_txtCapacidadCompoKeyTyped
+
+    private void txtVelocidadCompoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVelocidadCompoKeyTyped
+        // TODO add your handling code here:
+        char c= evt.getKeyChar();
+        
+        if(c<'0' || c>'9')evt.consume();
+    }//GEN-LAST:event_txtVelocidadCompoKeyTyped
 
     
     
@@ -370,8 +656,8 @@ public class ProductosI extends javax.swing.JFrame {
             DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
             for(int i = 0; i < productos.size(); i ++){
                 est = (Productos) productos.get(i);
-                Object estudiantesG [] = {est.getNombre(),est.getPrecio(),est.getMarca()};
-                model.insertRow(i, estudiantesG);
+                Object productosG [] = {est.getNombre(),est.getPrecio(),est.getMarca()};
+                model.insertRow(i, productosG);
             }
         }
     }
@@ -413,16 +699,19 @@ public class ProductosI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImprimirProductos;
     private javax.swing.JButton btnOkAcc;
     private javax.swing.JButton btnOkComp;
     private javax.swing.JButton btnOkComput;
     private javax.swing.JComboBox<String> cmbCategoria;
+    private javax.swing.JComboBox<String> cmbTipoComputador;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -445,7 +734,6 @@ public class ProductosI extends javax.swing.JFrame {
     private javax.swing.JTextField txtProcesador;
     private javax.swing.JTextField txtRAM;
     private javax.swing.JTextField txtTipoAcc;
-    private javax.swing.JTextField txtTipoComp;
     private javax.swing.JTextField txtTipoCompo;
     private javax.swing.JTextField txtVelocidadCompo;
     // End of variables declaration//GEN-END:variables

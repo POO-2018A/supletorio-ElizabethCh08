@@ -5,20 +5,25 @@
  */
 package productos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ESFOT
  */
-public class Productos {
+public class Productos implements Serializable{
     
     private String nombre;
-    private String precio;
+    private double precio;
     private String marca;
+    private String categoria;
+    
 
-    public Productos(String nombre, String precio, String marca) {
+    public Productos(String nombre, double precio, String marca,String categoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.marca = marca;
+        this.categoria=categoria;
     }
     public Productos(){}
     
@@ -31,11 +36,11 @@ public class Productos {
         this.nombre = nombre;
     }
 
-    public String getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(String precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 
@@ -47,7 +52,13 @@ public class Productos {
         this.marca = marca;
     }
 
-    
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
    
     
     
